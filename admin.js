@@ -107,7 +107,7 @@ btnLogout.addEventListener('click', () => {
 async function carregarCharadas() {
     try {
         // Faz requisição GET para rota protegida
-        const resposta = await fetch(`${API_BASE_URL}/admin/charadas`, {
+        const resposta = await fetch(`${API_BASE_URL}/charadas`, {
             method: 'GET',
             headers: {
                 // Passa o Token no cabeçalho (Header) para se identificar para a API!
@@ -175,12 +175,12 @@ charadaForm.addEventListener('submit', async (e) => {
     const charadaData = { pergunta, resposta, dificuldade };
 
     try {
-        let url = `${API_BASE_URL}/admin/charadas`;
+        let url = `${API_BASE_URL}/charadas`;
         let metodoHTTP = 'POST'; // Se não tiver ID é uma nova charada -> POST
 
         // Se tiver o ID, significa que estamos editando uma charada existente
         if (id) {
-            url = `${API_BASE_URL}/admin/charadas/${id}`;
+            url = `${API_BASE_URL}/charadas/${id}`;
             metodoHTTP = 'PUT'; // Edição = PUT
         }
 
@@ -247,7 +247,7 @@ async function deletarCharada(id) {
     }
 
     try {
-        const resposta = await fetch(`${API_BASE_URL}/admin/charadas/${id}`, {
+        const resposta = await fetch(`${API_BASE_URL}/charadas/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${tokenAtual}`
