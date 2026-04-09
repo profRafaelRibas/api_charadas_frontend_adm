@@ -203,8 +203,7 @@ charadaForm.addEventListener('submit', async (e) => {
 // Função chamada quando clica no botão Editar da tabela
 function editarCharada(id) {
     // Procura a charada que tem esse id no nosso array em memória
-    // Função find() é muito útil!
-    const charada = charadas.find(c => c.id === id); 
+    const charada = charadas.find(c => String(c.id) === String(id)); 
     
     if (charada) {
         // Preenche o formulário com os dados dela
