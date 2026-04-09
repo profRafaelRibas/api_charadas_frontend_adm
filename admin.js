@@ -70,7 +70,7 @@ loginForm.addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json' // Avisa a API que estamos mandando um arquivo JSON
             },
-            body: JSON.stringify({ usuario, password }) // Transforma objeto JS em texto JSON
+            body: JSON.stringify({ usuario, senha: password }) // Transforma objeto JS em texto JSON
         });
 
         // Se a API responder com status 200 (OK)
