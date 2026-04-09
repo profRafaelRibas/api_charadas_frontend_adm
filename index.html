@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Charadas</title>
+    <!-- Importando o Tailwind CSS para estilização rápida e moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-mask text-2xl mr-3"></i>
+                    <span class="font-bold text-xl tracking-wider">Admin Charadas</span>
+                </div>
+                <div id="userInfo" class="hidden flex items-center gap-4">
+                    <span id="userEmail" class="text-sm font-medium"></span>
+                    <button id="btnLogout" class="bg-white text-indigo-600 hover:bg-gray-100 px-4 py-2 rounded-md text-sm font-medium transition duration-200">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- SESSÃO DE LOGIN (Aparece se não estiver logado) -->
+        <div id="loginSection" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-8 mt-10">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Acesso Restrito</h2>
+                <p class="text-sm text-gray-500 mt-2">Faça login para gerenciar as charadas</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Senha</label>
+                    <input type="password" id="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200">
+                    Entrar
+                </button>
+                <div id="loginError" class="hidden text-red-500 text-sm text-center mt-2">Credenciais inválidas!</div>
+            </form>
+        </div>
+
+        <!-- SESSÃO ADMINISTRATIVA / CRUD (Aparece se estiver logado) -->
+        <div id="adminSection" class="hidden space-y-8">
+            
+            <!-- Cards de Resumo -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center">
+                    <div class="p-3 rounded-full bg-indigo-100 text-indigo-600 mr-4">
+                        <i class="fas fa-list text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Total de Charadas</p>
+                        <p id="totalCharadas" class="text-2xl font-bold text-gray-800">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Formulário para Criar/Editar Charadas -->
+                <div class="w-full lg:w-1/3">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 sticky top-6">
+                        <h3 id="formTitle" class="text-lg font-bold text-gray-800 mb-6 border-b pb-2">Nova Charada</h3>
+                        
+                        <form id="charadaForm" class="space-y-4">
+                            <!-- Input escondido para armazenar o ID quando estiver editando -->
+                            <input type="hidden" id="charadaId">
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Pergunta</label>
+                                <textarea id="pergunta" rows="3" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 resize-none"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Resposta</label>
+                                <input type="text" id="resposta" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Dificuldade</label>
+                                <select id="dificuldade" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    <option value="facil">Fácil</option>
+                                    <option value="media">Média</option>
+                                    <option value="dificil">Difícil</option>
+                                </select>
+                            </div>
+
+                            <div class="flex gap-3 pt-2">
+                                <button type="submit" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm text-sm font-medium hover:bg-indigo-700 transition duration-200">
+                                    Salvar
+                                </button>
+                                <button type="button" id="btnCancelar" class="hidden flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md shadow-sm text-sm font-medium hover:bg-gray-300 transition duration-200">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista de Charadas -->
+                <div class="w-full lg:w-2/3">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                            <h3 class="text-lg font-bold text-gray-800">Gerenciar Charadas</h3>
+                            <button onclick="carregarCharadas()" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                <i class="fas fa-sync-alt mr-1"></i> Atualizar
+                            </button>
+                        </div>
+                        
+                        <div class="p-0">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pergunta</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resposta</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dificuldade</th>
+                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelaCharadas" class="bg-white divide-y divide-gray-200">
+                                    <!-- Os dados serão injetados aqui via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Script principal -->
+    <script src="admin.js"></script>
+</body>
+</html>
