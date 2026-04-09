@@ -3,7 +3,7 @@
  * OBJETIVO: Gerenciar o CRUD (Criar, Ler, Atualizar e Deletar) das charadas 
  *           consumindo uma API(Backend) protegida por autenticação.
  * 
- * CONCEITOS PARA ALUNOS:
+ * CONCEITOS:
  * 1. Fetch API: Usada para fazer requisições HTTP (GET, POST, PUT, DELETE).
  * 2. Async/Await: Uma forma limpa de trabalhar com código assíncrono (que demora um tempo para responder).
  * 3. LocalStorage: Usado para salvar o token do usuário no navegador e manter ele "logado".
@@ -14,7 +14,7 @@
 // CONFIGURAÇÕES GERAIS DA API
 // ==========================================
 // Substitua pela URL da sua API Flask real
-const API_BASE_URL = 'http://localhost:5000'; 
+const API_BASE_URL = 'https://api-charadas-backend-lovat.vercel.app'; 
 
 // ==========================================
 // REFERÊNCIAS DO DOM (Elementos do HTML)
