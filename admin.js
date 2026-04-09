@@ -60,7 +60,7 @@ function iniciarApp() {
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault(); // Impede o formulário de recarregar a página (comportamento padrão do HTML)
     
-    const email = document.getElementById('email').value;
+    const usuario = document.getElementById('usuario').value;
     const password = document.getElementById('password').value;
 
     try {
@@ -70,7 +70,7 @@ loginForm.addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json' // Avisa a API que estamos mandando um arquivo JSON
             },
-            body: JSON.stringify({ email, password }) // Transforma objeto JS em texto JSON
+            body: JSON.stringify({ usuario, password }) // Transforma objeto JS em texto JSON
         });
 
         // Se a API responder com status 200 (OK)
