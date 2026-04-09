@@ -144,11 +144,6 @@ function renderizarTabela() {
         tr.innerHTML = `
             <td class="px-6 py-4 whitespace-normal text-sm text-gray-800">${charada.pergunta}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">${charada.resposta}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                    ${charada.dificuldade}
-                </span>
-            </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <button onclick="editarCharada('${charada.id}')" class="text-indigo-600 hover:text-indigo-900 mr-3 transition duration-150">Editar</button>
                 <button onclick="deletarCharada('${charada.id}')" class="text-red-600 hover:text-red-900 transition duration-150">Excluir</button>
@@ -170,9 +165,8 @@ charadaForm.addEventListener('submit', async (e) => {
     const id = document.getElementById('charadaId').value;
     const pergunta = document.getElementById('pergunta').value;
     const resposta = document.getElementById('resposta').value;
-    const dificuldade = document.getElementById('dificuldade').value;
 
-    const charadaData = { pergunta, resposta, dificuldade };
+    const charadaData = { pergunta, resposta };
 
     try {
         let url = `${API_BASE_URL}/charadas`;
@@ -217,7 +211,6 @@ function editarCharada(id) {
         document.getElementById('charadaId').value = charada.id;
         document.getElementById('pergunta').value = charada.pergunta;
         document.getElementById('resposta').value = charada.resposta;
-        document.getElementById('dificuldade').value = charada.dificuldade;
 
         // Muda título e mostra botão cancelar
         formTitle.textContent = "Editar Charada";
